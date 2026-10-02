@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FrameFix — PC FPS Calculator & Bottleneck Estimator</title>
+    <meta name="description" content="Estimate gaming FPS by CPU, GPU, RAM, game, resolution and graphics preset. Get an optimized preset and a clear bottleneck estimate in seconds." />
+    <meta name="robots" content="index,follow,max-image-preview:large" />
+    <meta name="theme-color" content="#080b0a" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FrameFix — PC FPS Calculator" />
+    <meta property="og:description" content="Estimate FPS, find your bottleneck and get optimized settings for popular PC games." />
+    <meta name="twitter:card" content="summary" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23080b0a'/%3E%3Cpath d='M14 16h36v9H25v7h20v9H25v10H14z' fill='%23b7ff38'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "FrameFix",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Any",
+        "description": "A browser-based gaming FPS calculator and PC bottleneck estimator.",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+      }
+    </script>
+  </head>
+  <body>
+    <div class="ambient ambient-one" aria-hidden="true"></div>
+    <div class="ambient ambient-two" aria-hidden="true"></div>
+
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="FrameFix home">
+        <span class="brand-mark">F</span>
+        <span>Frame<span>Fix</span></span>
+      </a>
+      <nav aria-label="Primary navigation">
+        <a href="#calculator">Calculator</a>
+        <a href="#method">How it works</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <span class="beta-pill"><i></i> Public beta</span>
+    </header>
+
+    <main id="top">
+      <section class="intro" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">PC PERFORMANCE ESTIMATOR</p>
+          <h1 id="page-title">Know your frames<br /><span>before you play.</span></h1>
+        </div>
+        <p class="intro-copy">Pick your hardware and game. FrameFix estimates real-world FPS ranges, finds the likely limit in your build and recommends a sensible preset.</p>
+      </section>
+
+      <section class="workspace" id="calculator" aria-label="FPS calculator">
+        <form class="config-panel" id="config-form">
+          <div class="panel-heading">
+            <span class="step">01</span>
+            <div>
+              <h2>Your build</h2>
+              <p>Choose the closest matching parts.</p>
+            </div>
+          </div>
+
+          <div class="field-grid">
+            <label class="field field-wide">
+              <span>GAME</span>
+              <select id="game" name="game" aria-label="Game"></select>
+            </label>
+            <label class="field">
+              <span>CPU</span>
+              <select id="cpu" name="cpu" aria-label="Processor"></select>
+            </label>
+            <label class="field">
+              <span>GPU</span>
+              <select id="gpu" name="gpu" aria-label="Graphics card"></select>
+            </label>
+            <label class="field">
+              <span>RAM</span>
+              <select id="ram" name="ram" aria-label="Memory">
+                <option value="8">8 GB</option>
+                <option value="16">16 GB</option>
+                <option value="32" selected>32 GB</option>
+                <option value="64">64 GB</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>TARGET FPS</span>
+              <select id="target" name="target" aria-label="Target frame rate">
+                <option value="60">60 FPS</option>
+                <option value="120" selected>120 FPS</option>
+                <option value="144">144 FPS</option>
+                <option value="240">240 FPS</option>
+              </select>
+            </label>
+          </div>
+
+          <fieldset class="resolution-picker">
+            <legend>RESOLUTION</legend>
+            <div class="segmented" id="resolution-options">
+              <label><input type="radio" name="resolution" value="1080" checked /><span>1080p</span></label>
+              <label><input type="radio" name="resolution" value="1440" /><span>1440p</span></label>
+              <label><input type="radio" name="resolution" value="2160" /><span>4K</span></label>
+            </div>
+          </fieldset>
+
+          <button class="calculate-button" type="submit">
+            <span>Calculate performance</span>
+            <kbd>ENTER</kbd>
+          </button>
+          <p class="form-note">Estimates vary by drivers, cooling, game version and background apps.</p>
+        </form>
+
+        <section class="result-panel" aria-live="polite" aria-labelledby="result-title">
+          <div class="result-topline">
+            <div>
+              <span class="section-label">ESTIMATED PERFORMANCE</span>
+              <h2 id="result-title">Balanced preset</h2>
+            </div>
+            <span class="confidence"><i></i> Model confidence: medium</span>
+          </div>
+
+          <div class="fps-hero">
+            <div class="fps-value-wrap">
+              <strong id="fps-value">104–128</strong>
+              <span>FPS</span>
+            </div>
+            <div class="target-status" id="target-status">Near your 120 FPS target</div>
+          </div>
+
+          <div class="preset-chart" id="preset-chart" aria-label="Estimated FPS by graphics preset"></div>
+
+          <div class="insight-grid">
+            <article class="insight bottleneck-card">
+              <div class="insight-icon" aria-hidden="true">⌁</div>
+              <div>
+                <span>LIKELY BOTTLENECK</span>
+                <h3 id="bottleneck-title">Balanced system</h3>
+                <p id="bottleneck-copy">The CPU and GPU are closely matched for this workload.</p>
+              </div>
+              <strong id="bottleneck-score">7%</strong>
+            </article>
+            <article class="insight recommendation-card">
+              <div class="insight-icon" aria-hidden="true">✓</div>
+              <div>
+                <span>FRAMEFIX PICK</span>
+                <h3 id="recommendation-title">Use Balanced</h3>
+                <p id="recommendation-copy">Best visual quality while staying close to your target.</p>
+              </div>
+            </article>
+          </div>
+
+          <div class="settings-list">
+            <div class="settings-heading">
+              <h3>Suggested tweaks</h3>
+              <span id="settings-game">for BeamNG.drive</span>
+            </div>
+            <ul id="settings-tips"></ul>
+          </div>
+        </section>
+      </section>
+
+      <aside class="ad-slot" aria-label="Advertisement placeholder">
+        <span>ADVERTISEMENT</span>
+        <p>Reserved for a future, non-intrusive display ad</p>
+      </aside>
+
+      <section class="method-section" id="method" aria-labelledby="method-title">
+        <div class="method-copy">
+          <p class="eyebrow">THE FRAMEFIX MODEL</p>
+          <h2 id="method-title">A useful estimate.<br />Not a fake benchmark.</h2>
+          <p>FrameFix combines relative CPU and GPU performance, a game-specific workload profile, resolution scaling and memory pressure. It returns a range because no two PCs run exactly alike.</p>
+        </div>
+        <div class="method-steps">
+          <article><span>01</span><div><h3>Normalize the hardware</h3><p>Parts are compared using practical relative performance scores.</p></div></article>
+          <article><span>02</span><div><h3>Apply the game profile</h3><p>CPU-heavy and GPU-heavy games scale differently.</p></div></article>
+          <article><span>03</span><div><h3>Recommend, don’t promise</h3><p>The model favors stable targets over unrealistic peak numbers.</p></div></article>
+        </div>
+      </section>
+
+      <section class="faq-section" id="faq" aria-labelledby="faq-title">
+        <p class="eyebrow">QUICK ANSWERS</p>
+        <h2 id="faq-title">FPS calculator FAQ</h2>
+        <div class="faq-grid">
+          <details open><summary>How accurate are the estimates?</summary><p>Use them as a planning range, not a guaranteed benchmark. Game updates, temperatures, drivers, overclocks and background tasks can move the result.</p></details>
+          <details><summary>Does more RAM always increase FPS?</summary><p>No. Enough RAM prevents stutter and slowdowns, but extra capacity above a game’s needs rarely adds meaningful average FPS.</p></details>
+          <details><summary>What does “bottleneck” mean?</summary><p>It is the component most likely to limit performance in the selected game and resolution. Every PC has a limiting part; the goal is a sensible balance.</p></details>
+          <details><summary>Does FrameFix include ray tracing?</summary><p>Not in this first model. Results assume standard rasterized graphics unless a game profile explicitly says otherwise.</p></details>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <a class="brand brand-small" href="#top"><span class="brand-mark">F</span><span>Frame<span>Fix</span></span></a>
+      <p>Smart estimates for better PC gaming decisions.</p>
+      <span>© <span id="year"></span> FrameFix</span>
+    </footer>
+
+    <script src="./app.js" defer></script>
+  </body>
+</html>
